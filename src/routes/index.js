@@ -1,9 +1,9 @@
-import Welcome from "../components/Welcome";
+import Login from "../components/Login/Login";
 
 const routes = [
     {
         path: '/',
-        component: Welcome,
+        component: Login,
         exact: true
     }
 ]
