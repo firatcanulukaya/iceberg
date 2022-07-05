@@ -1,0 +1,29 @@
+* {
+    margin: 0;
+    padding: 0;
+    outline: 0;
+    border: 0;
+    box-sizing: border-box;
+    list-style: none;
+    text-decoration: none;
+    scroll-behavior: smooth;
+    background: none;
+    font-family: "Poppins", sans-serif;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    display: none;
+}
+
+:root {
+    --primaryColor: rgb(37, 47, 63);
+    --secondaryColor: rgb(27, 33, 44);
+    --primaryColorAlt: rgb(36, 48, 63);
+    --secondaryColorAlt: rgb(72, 105, 147);
+    --white: rgb(180, 192, 209);
+}
+
+body {
+    background: var(--primaryColor);
+}
