@@ -8,7 +8,7 @@ const Chat = ({user}) => {
     const [newMessage, setNewMessage] = useState('');
     const [messages, setMessages] = useState([]);
     const messagesRef = collection(db, "messages");
-    const bottomListRef = useRef();
+    let bottomListRef = document.getElementById('messagesUl')
 
     const handleOnChange = e => {
         setNewMessage(e.target.value);
@@ -16,20 +16,22 @@ const Chat = ({user}) => {
 
     const handleOnSubmit = async e => {
         e.preventDefault();
+        setNewMessage('')
         await addDoc(messagesRef, {
             text: newMessage,
             createdAt: new Date(),
             displayName: user.displayName,
             photoURL: user.photoURL
         })
-        setNewMessage('')
-        bottomListRef.current.scrollIntoView({behavior: 'smooth'});
+        bottomListRef.scrollTo(0, bottomListRef.scrollHeight)
     };
 
     useEffect(() => {
         const fetchData = async () => {
             const data = await getDocs(messagesRef);
-            setMessages(data.docs.map(doc => ({...doc.data(), id: doc.id})))
+            await setMessages(data.docs.map(doc => ({...doc.data(), id: doc.id})))
+            bottomListRef = document.getElementById('messagesUl')
+            bottomListRef.scrollTo(0, bottomListRef.scrollHeight)
         }
         fetchData()
     }, [])
@@ -37,14 +39,14 @@ const Chat = ({user}) => {
     useEffect(() => {
         return onSnapshot(collection(db, "messages"), (snapshot) => {
             setMessages(snapshot.docs.map(doc => ({...doc.data(), id: doc.id})))
-            bottomListRef.current.scrollIntoView({behavior: 'smooth'});
-        })
+            bottomListRef.scrollTo(0, bottomListRef.scrollHeight)
+        });
     }, [])
 
     return (
-        <div className="w-1/2 border-l-2 border-r-2 border-solid border-secondaryColor h-[100vh] mx-auto">
+        <div className="w-full lg:w-1/2 border-l-2 border-r-2 border-solid border-secondaryColor h-[100vh] mx-auto">
             <div className="flex flex-col h-full">
-                <div className="overflow-auto h-full">
+                <div className="overflow-auto h-full" id="messagesUl">
                     <div className="py-4 max-w-screen-lg mx-auto">
                         <div className="border-b dark:border-gray-600 border-gray-200 py-8 mb-4">
                             <div className="font-bold text-3xl text-center">
@@ -72,7 +74,6 @@ const Chat = ({user}) => {
                                     </li>
                                 ))}
                         </ul>
-                        <div ref={bottomListRef}/>
                     </div>
                 </div>
                 <div className="mb-6 mx-4">

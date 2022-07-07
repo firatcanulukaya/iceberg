@@ -4,15 +4,14 @@ import moment from "moment";
 const Message = ({createdAt, text, displayName, photoURL}) => {
 
     return (
-        <div
-            className="px-4 py-4 hover:bg-secondaryColor transition-colors overflow-hidden flex items-start">
+        <div className="px-4 py-4 hover:bg-secondaryColor transition-colors overflow-hidden flex items-start">
 
-            <div className="mr-8 w-12 h-12">
+            <div className="mr-8 w-12 h-12 rounded-full overflow-hidden flex-shrink-0">
                 {photoURL ? (
                     <img
                         src={photoURL}
                         alt="Avatar"
-                        className="object-cover w-full h-full rounded-full"
+                        className="object-cover w-full h-full"
                     />
                 ) : null}
             </div>
@@ -29,7 +28,7 @@ const Message = ({createdAt, text, displayName, photoURL}) => {
                         ) : null
                     }
                 </div>
-                <div className="max-w-xl"><p className="text-gray-400 break-words">{text}</p></div>
+                <div className="w-full"><p className="text-gray-400 break-words">{text}</p></div>
             </div>
         </div>
     );

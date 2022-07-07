@@ -1,6 +1,6 @@
 import {initializeApp,} from 'firebase/app';
 import {GoogleAuthProvider, getAuth, signInWithPopup, signOut} from "firebase/auth";
-import {doc, getDoc, getFirestore, getDocs, collection} from "firebase/firestore";
+import {getFirestore} from "firebase/firestore";
 import {toast} from "react-hot-toast";
 import Cookies from "js-cookie";
 
@@ -23,7 +23,6 @@ export const signInGoogle = async () => {
         .then((result) => {
             const credential = GoogleAuthProvider.credentialFromResult(result);
             const token = credential.accessToken;
-            // The signed-in user info.
             toast.success('Logged in.')
             Cookies.set('_USER_TOKEN_', token)
         })
@@ -35,7 +34,7 @@ export const signInGoogle = async () => {
 export const logout = () => {
     signOut(auth).then(() => {
         toast.success('Logout.')
-        Cookies.remove('_USER_TOKEN_', { path: '' })
+        Cookies.remove('_USER_TOKEN_', {path: ''})
     }).catch((error) => {
         toast.error(error)
     });

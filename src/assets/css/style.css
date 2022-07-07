@@ -31,3 +31,23 @@ input::-webkit-inner-spin-button {
 body {
     background: var(--primaryColor);
 }
+
+/* Firefox */
+* {
+    scrollbar-width: auto;
+    scrollbar-color: var(--secondaryColorAlt) var(--primaryColor);;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+    width: 8px;
+}
+
+*::-webkit-scrollbar-track {
+    background: var(--primaryColor);
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: var(--secondaryColorAlt);
+    border-radius: 10px;
+}
