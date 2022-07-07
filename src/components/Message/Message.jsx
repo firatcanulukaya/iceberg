@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from "moment";
 
-const Message = ({createdAt, text, displayName, photoURL}) => {
+const Message = ({createdAt, text, displayName, photoURL, emailVerified, uid}) => {
 
     return (
         <div className="px-4 py-4 hover:bg-secondaryColor transition-colors overflow-hidden flex items-start">
@@ -19,7 +19,10 @@ const Message = ({createdAt, text, displayName, photoURL}) => {
             <div className="flex flex-col">
                 <div className="flex items-center mb-1">
                     {displayName ? (
-                        <p className="mr-2 text-gray-300">{displayName}</p>
+                        <>
+                            <p className="mr-2 text-gray-300">{displayName}</p>
+                            <p className="mr-2 text-gray-400">{emailVerified ? <i className="fa-solid fa-check"/> : null}</p>
+                        </>
                     ) : null}
 
                     {

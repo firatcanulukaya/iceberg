@@ -1,12 +1,13 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Message from "../Message/Message";
 import {db, logout} from "../../firebase";
 import {collection, getDocs, onSnapshot, addDoc} from "firebase/firestore";
-
+import Spinner from "../Loading/Spinner";
 
 const Chat = ({user}) => {
     const [newMessage, setNewMessage] = useState('');
     const [messages, setMessages] = useState([]);
+    const [loading, setLoading] = useState(true)
     const messagesRef = collection(db, "messages");
     let bottomListRef = document.getElementById('messagesUl')
 
@@ -21,7 +22,9 @@ const Chat = ({user}) => {
             text: newMessage,
             createdAt: new Date(),
             displayName: user.displayName,
-            photoURL: user.photoURL
+            photoURL: user.photoURL,
+            uid: user.uid,
+            emailVerified: user.emailVerified
         })
         bottomListRef.scrollTo(0, bottomListRef.scrollHeight)
     };
@@ -30,6 +33,7 @@ const Chat = ({user}) => {
         const fetchData = async () => {
             const data = await getDocs(messagesRef);
             await setMessages(data.docs.map(doc => ({...doc.data(), id: doc.id})))
+            setLoading(false)
             bottomListRef = document.getElementById('messagesUl')
             bottomListRef.scrollTo(0, bottomListRef.scrollHeight)
         }
@@ -64,15 +68,18 @@ const Chat = ({user}) => {
                             </div>
                         </div>
                         <ul>
-                            {messages
-                                ?.sort((first, second) =>
-                                    first?.createdAt?.seconds <= second?.createdAt?.seconds ? -1 : 1
-                                )
-                                ?.map(message => (
-                                    <li key={message.id}>
-                                        <Message {...message} />
-                                    </li>
-                                ))}
+                            {
+                                loading ? <div className="flex justify-center items-center"><Spinner/></div>
+                                    :
+                                    messages
+                                        ?.sort((first, second) =>
+                                            first?.createdAt?.seconds <= second?.createdAt?.seconds ? -1 : 1
+                                        )
+                                        ?.map(message => (
+                                            <li key={message.id}>
+                                                <Message {...message} />
+                                            </li>
+                                        ))}
                         </ul>
                     </div>
                 </div>
