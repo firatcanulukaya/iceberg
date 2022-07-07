@@ -6,21 +6,40 @@ export const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+  gap: 2rem;
 `;
 
 export const LoginWithGoogleBtn = styled.button`
   display: flex;
+  align-items: center;
   gap: 1rem;
   background-color: var(--secondaryColor);
-  padding: 2rem 4rem;
+  padding: 1rem 2rem;
   border-radius: 5rem;
   color: #fff;
-  transition: all .5s ease-in-out;
+  transition: all .3s ease-in-out;
   cursor: pointer;
-  font-size: 2rem;
+  font-size: 1.3rem;
 
   &:hover {
     transform: translate(20px, -10px) scale(1.1);
     box-shadow: -.6rem 0.8em 0.9em -0.3em var(--secondaryColorAlt);
   }
+`;
+
+export const IcebergLabel = styled.span`
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+`;
+
+export const IcebergTitle = styled.h3`
+  font-size: 2rem;
+  color: #fff;
+`;
+
+export const IcebergLogo = styled.img`
+  width: 64px;
+  height: 64px;
 `;

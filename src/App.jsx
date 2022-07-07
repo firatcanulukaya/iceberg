@@ -1,18 +1,30 @@
-import {Routes, Route} from "react-router-dom";
-import routes from "./routes";
+import React, {useState} from 'react'
 import {Toaster} from "react-hot-toast";
+import Login from "./components/Login/Login";
+import Chat from "./components/Chat/Chat";
+import Cookies from "js-cookie";
+import {onAuthStateChanged} from "firebase/auth";
+import {auth} from "./firebase";
 
 const App = () => {
+    const [user, setUser] = useState(null);
+    const authToken = Cookies.get('_USER_TOKEN_')
+
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            setUser(user)
+        } else {
+            setUser(null)
+        }
+    })
+
     return (
-        <>
+        <React.Fragment>
             <Toaster position="top-center" reverseOrder={false}/>
-            <Routes>
-                {routes.map((route, index) => (
-                    <Route key={index} exact={route.exact} path={route.path}
-                           element={<route.component/>}/>
-                ))}
-            </Routes>
-        </>
+
+            {authToken ? <Chat user={user}/> : <Login/>}
+
+        </React.Fragment>
     );
 }
 
