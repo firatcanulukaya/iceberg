@@ -3,6 +3,7 @@ import Message from "../Message/Message";
 import {db, logout} from "../../firebase";
 import {collection, getDocs, onSnapshot, addDoc} from "firebase/firestore";
 import Spinner from "../Loading/Spinner";
+import Iceberg from "../../assets/img/logo.png"
 
 const Chat = ({user}) => {
     const [newMessage, setNewMessage] = useState('');
@@ -52,20 +53,18 @@ const Chat = ({user}) => {
             <div className="flex flex-col h-full">
                 <div className="overflow-auto h-full" id="messagesUl">
                     <div className="py-4 max-w-screen-lg mx-auto">
-                        <div className="border-b dark:border-gray-600 border-gray-200 py-8 mb-4">
+                        <div className="border-b dark:border-gray-600 border-gray-200 py-8 mb-4 flex flex-col justify-center">
                             <div className="font-bold text-3xl text-center">
+
                                 <p className="mb-1 text-gray-300">Welcome to</p>
-                                <p className="mb-3 text-gray-300">Iceberg</p>
+                                <span className="flex justify-center gap-2">
+                                    <img src={Iceberg} alt="Iceberg Logo" className="w-8 h-8"/>
+                                    <p className="mb-3 text-gray-300">Iceberg</p>
+                                </span>
                             </div>
                             <p className="text-gray-500 text-center">
                                 This is the beginning of this chat.
                             </p>
-                            <div className="text-center mt-2">
-                                <button
-                                    className="bg-red-300 rounded-xl px-5 transition-colors hover:bg-red-400 text-red-700 hover:text-red-800"
-                                    onClick={logout}>Logout
-                                </button>
-                            </div>
                         </div>
                         <ul>
                             {
@@ -83,9 +82,20 @@ const Chat = ({user}) => {
                         </ul>
                     </div>
                 </div>
-                <div className="mb-6 mx-4">
+                <div className="mb-6 mx-4 flex items-center gap-4">
+                    <span className="dropdown group bg-secondaryColor rounded-full px-2 py-1" tabIndex={0}>
+                                    <button className="dropdown-button">
+                                        <img src={user?.photoURL} alt="User Photo"
+                                             className="rounded-full w-8 h-8 mr-2"/>
+                                        <i className="dropdown-icon ml-2 h-5 w-5 fa-solid fa-caret-down text-white"/>
+                                    </button>
+                                    <div className="dropdown-content shadow-lg">
+                                        <p onClick={logout}
+                                           className="transition-colors text-red-500 hover:text-red-600">Logout</p>
+                                    </div>
+                                </span>
                     <form onSubmit={handleOnSubmit}
-                          className="flex flex-row bg-secondaryColor text-white rounded-md px-4 py-3 z-10 max-w-screen-lg mx-auto shadow-md">
+                          className="flex flex-row w-full bg-secondaryColor text-white rounded-md px-4 py-3 z-10 max-w-screen-lg mx-auto shadow-md">
                         <input
                             type="text"
                             value={newMessage}
