@@ -17,10 +17,14 @@ const Chat = ({user}) => {
         await addDoc(messagesRef, {
             text: newMessage,
             createdAt: new Date(),
-            displayName: user.displayName,
-            photoURL: user.photoURL,
-            uid: user.uid,
-            emailVerified: user.emailVerified
+            user: {
+                displayName: user.displayName,
+                photoURL: user.photoURL,
+                uid: user.uid,
+                emailVerified: user.emailVerified
+            },
+            isEdited: false,
+            editMetadata: {}
         })
 
         document.getElementById('messagesUl').scrollTo(0, document.getElementById('messagesUl').scrollHeight)
@@ -77,7 +81,7 @@ const Chat = ({user}) => {
                                         )
                                         ?.map(message => (
                                             <li key={message.id}>
-                                                <Message {...message} />
+                                                <Message message={message} />
                                             </li>
                                         ))}
                         </ul>
