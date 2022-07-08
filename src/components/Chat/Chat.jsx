@@ -5,8 +5,8 @@ import {collection, getDocs, onSnapshot, addDoc} from "firebase/firestore";
 import {useTranslation} from "react-i18next";
 import Spinner from "../Loading/Spinner";
 import Iceberg from "../../assets/img/logo.png"
-import UserDropdown from "../UserDropdown/UserDropdown";
-import LangsDropdown from "../LangsDropdown/LangsDropdown";
+import UserDropdown from "../Dropdowns/UserDropdown";
+import LangsDropdown from "../Dropdowns/LangsDropdown";
 
 const Chat = ({user}) => {
     const {t} = useTranslation();
@@ -91,9 +91,11 @@ const Chat = ({user}) => {
                         </ul>
                     </div>
                 </div>
-                <div className="mb-6 mx-4 flex items-center gap-4">
-                    <UserDropdown user={user}/>
-                    <LangsDropdown/>
+                <div className="mb-6 mx-4 flex items-center gap-4 flex-col-reverse md:flex-row">
+                    <div className="flex justify-evenly items-center w-full md:w-1/2">
+                        <UserDropdown user={user}/>
+                        <LangsDropdown/>
+                    </div>
                     <form onSubmit={handleOnSubmit}
                           className="flex flex-row w-full bg-secondaryColor text-white rounded-md px-4 py-3 z-10 max-w-screen-lg mx-auto shadow-md">
                         <input

@@ -24,7 +24,7 @@ const LangsDropdown = () => {
                 <p className="text-gray-400">{i18n.language.toUpperCase()}</p>
                         <i className="dropdown-icon ml-2 h-5 w-5 fa-solid fa-caret-down text-gray-400"/>
             </button>
-            <div className="dropdown-content shadow-lg bottom-[180%] md:left-[0px] left-[25px]">
+            <div className="dropdown-content shadow-lg bottom-[180%] md:left-0 right-0">
                 {langs.map((lang, index) => (
                     <button
                         className={`text-left !text-sm !px-3 !w-full text-gray-300 ${i18n.language === lang ? `!text-thirdColor` : null}`}
