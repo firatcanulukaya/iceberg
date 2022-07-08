@@ -1,0 +1,14 @@
+{
+  "WELCOME": "Welcome to Iceberg",
+  "LANGUAGE_CHANGED": "Language changed to {{lang}}.",
+  "BEGGING_OF_THE_CHAT": "This is the beginning of this chat.",
+  "EDITED_MESSAGE": "edited {{time}}",
+  "EDIT": "Edit",
+  "DELETE": "Delete",
+  "TYPE_YOUR_MESSAGE": "Type your message here...",
+  "MESSAGE": "Message",
+  "ANONYMOUS": "Anonymous",
+  "LOGOUT": "Logout",
+  "MESSAGE_UPDATED": "Message updated successfully.",
+  "MESSAGE_DELETED": "Message deleted successfully."
+}

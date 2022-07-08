@@ -1,7 +1,10 @@
 import React from "react";
 import {logout} from "../../firebase";
+import {useTranslation} from "react-i18next";
 
 const UserDropdown = ({user}) => {
+    const {t} = useTranslation();
+
     return (
         <span className="dropdown group bg-secondaryColor rounded-full px-3 py-1" tabIndex={0}>
             <button className="dropdown-button">
@@ -13,7 +16,7 @@ const UserDropdown = ({user}) => {
                 <p onClick={logout}
                    className="transition-colors text-red-500 hover:text-red-600 flex gap-2 items-center">
                     <i className="fa-solid fa-person-running"/>
-                    Logout
+                    {t('LOGOUT')}
                 </p>
             </div>
         </span>

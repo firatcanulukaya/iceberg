@@ -1,0 +1,14 @@
+{
+  "WELCOME": "Iceberg'e hoşgeldin.",
+  "LANGUAGE_CHANGED": "Dil {{lang}} olarak değiştirildi.",
+  "BEGGING_OF_THE_CHAT": "Burası sohbetin başlangıcı.",
+  "EDITED_MESSAGE": "{{time}} düzenlendi",
+  "EDIT": "Düzenle",
+  "DELETE": "Sil",
+  "TYPE_YOUR_MESSAGE": "Mesajınızı burya yazın...",
+  "MESSAGE": "Mesaj",
+  "ANONYMOUS": "Anonim",
+  "LOGOUT": "Çıkış Yap",
+  "MESSAGE_UPDATED": "Mesaj başarıyla güncellendi.",
+  "MESSAGE_DELETED": "Mesaj başarıyla silindi."
+}

@@ -2,11 +2,14 @@ import React, {useEffect, useState} from 'react';
 import Message from "../Message/Message";
 import {db} from "../../firebase";
 import {collection, getDocs, onSnapshot, addDoc} from "firebase/firestore";
+import {useTranslation} from "react-i18next";
 import Spinner from "../Loading/Spinner";
 import Iceberg from "../../assets/img/logo.png"
 import UserDropdown from "../UserDropdown/UserDropdown";
+import LangsDropdown from "../LangsDropdown/LangsDropdown";
 
 const Chat = ({user}) => {
+    const {t} = useTranslation();
     const [newMessage, setNewMessage] = useState('');
     const [messages, setMessages] = useState([]);
     const [loading, setLoading] = useState(true)
@@ -69,7 +72,7 @@ const Chat = ({user}) => {
                                 </span>
                             </div>
                             <p className="text-gray-500 text-center">
-                                This is the beginning of this chat.
+                                {t('BEGGING_OF_THE_CHAT')}
                             </p>
                         </div>
                         <ul>
@@ -90,13 +93,14 @@ const Chat = ({user}) => {
                 </div>
                 <div className="mb-6 mx-4 flex items-center gap-4">
                     <UserDropdown user={user}/>
+                    <LangsDropdown/>
                     <form onSubmit={handleOnSubmit}
                           className="flex flex-row w-full bg-secondaryColor text-white rounded-md px-4 py-3 z-10 max-w-screen-lg mx-auto shadow-md">
                         <input
                             type="text"
                             value={newMessage}
                             onChange={e => setNewMessage(e.target.value)}
-                            placeholder="Type your message here..."
+                            placeholder={t('TYPE_YOUR_MESSAGE')}
                             className="flex-1 bg-transparent outline-none"/>
                         <button
                             type="submit"

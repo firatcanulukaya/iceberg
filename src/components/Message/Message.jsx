@@ -3,8 +3,14 @@ import dayjs from "dayjs";
 import {updateDoc, doc, deleteDoc} from 'firebase/firestore'
 import {db} from "../../firebase";
 import {toast} from "react-hot-toast";
+import {useTranslation} from "react-i18next";
+import relativeTime from 'dayjs/plugin/relativeTime'
 
 const Message = ({message, uid}) => {
+    dayjs.extend(relativeTime);
+    const {i18n, t} = useTranslation();
+    dayjs.locale(i18n.language);
+
     const [isEditing, setIsEditing] = useState(false);
     const [editMessage, setEditMessage] = useState('');
 
@@ -23,7 +29,7 @@ const Message = ({message, uid}) => {
 
         await updateDoc(messageDoc, newFields)
             .then(() => {
-                toast.success("Message updated successfully.")
+                toast.success(t('MESSAGE_UPDATED'))
                 setIsEditing(false)
                 setEditMessage('')
             })
@@ -36,7 +42,7 @@ const Message = ({message, uid}) => {
         const messageDoc = doc(db, "messages", id);
         await deleteDoc(messageDoc)
             .then(() => {
-                toast.success("Message deleted successfully.")
+                toast.success(t('MESSAGE_DELETED'))
             })
             .catch(error => {
                 toast.error(`${error.code}: ${error.message}`)
@@ -68,13 +74,13 @@ const Message = ({message, uid}) => {
                                         <p className="text-white hover:text-gray-300 transition-colors flex gap-2 items-center"
                                            onClick={handleUpdate}>
                                             <i className="fa-solid fa-pen-to-square"/>
-                                            Edit
+                                            {t('EDIT')}
                                         </p>
                                         <div className="w-full h-[1px] bg-gray-700"/>
                                         <p className="transition-colors text-red-500 hover:text-red-600 flex gap-2 items-center"
                                            onClick={() => deleteMessage(message.id)}>
                                             <i className="fa-solid fa-trash"/>
-                                            Delete
+                                            {t('DELETE')}
                                         </p>
                                     </div>
                                 </span>
@@ -96,7 +102,7 @@ const Message = ({message, uid}) => {
                             <p className="mr-2 text-gray-400">{message?.user?.emailVerified ?
                                 <i className="fa-solid fa-check"/> : null}</p>
                         </>
-                    ) : <p className="mr-2 text-gray-300">Anonymous</p>}
+                    ) : <p className="mr-2 text-gray-300">{t('ANONYMOUS')}</p>}
                     <span className="text-gray-500 text-xs">
                         {dayjs(message?.createdAt?.seconds * 1000).fromNow()}
                     </span>
@@ -112,7 +118,7 @@ const Message = ({message, uid}) => {
                                 type="text"
                                 value={editMessage}
                                 onChange={e => setEditMessage(e.target.value)}
-                                placeholder="Message"
+                                placeholder={t('MESSAGE')}
                                 id={`message_${message.id}`}
                                 className="flex-1 bg-transparent outline-none" onKeyDown={handleKeyDown}/>
                             <button
@@ -129,7 +135,7 @@ const Message = ({message, uid}) => {
 
 
                 {message.isEdited ?
-                    <p className="text-gray-500 text-[10px]">(edited {dayjs(message?.editMetadata?.timestamp.seconds * 1000).fromNow()})</p> : null}
+                    <p className="text-gray-500 text-[10px]">({t('EDITED_MESSAGE', {time: dayjs(message?.editMetadata?.timestamp.seconds * 1000).fromNow()})})</p> : null}
             </div>
         </div>
     );
