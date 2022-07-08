@@ -3,6 +3,7 @@ import {GoogleAuthProvider, getAuth, signInWithPopup, signOut} from "firebase/au
 import {getFirestore} from "firebase/firestore";
 import {toast} from "react-hot-toast";
 import Cookies from "js-cookie";
+import i18n from '../localization/config';
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_API_KEY,
@@ -23,7 +24,7 @@ export const signInGoogle = async () => {
         .then((result) => {
             const credential = GoogleAuthProvider.credentialFromResult(result);
             const token = credential.accessToken;
-            toast.success('Logged in.')
+            toast.success(i18n.t('LOGIN_SUCESS'));
             Cookies.set('_USER_TOKEN_', token)
         })
         .catch((error) => {
@@ -31,9 +32,10 @@ export const signInGoogle = async () => {
         });
 
 }
+
 export const logout = () => {
     signOut(auth).then(() => {
-        toast.success('Logout.')
+        toast.success(i18n.t('LOGOUT_SUCESS'))
         Cookies.remove('_USER_TOKEN_', {path: ''})
     }).catch((error) => {
         toast.error(error)

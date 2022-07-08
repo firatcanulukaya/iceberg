@@ -10,5 +10,8 @@
   "ANONYMOUS": "Anonymous",
   "LOGOUT": "Logout",
   "MESSAGE_UPDATED": "Message updated successfully.",
-  "MESSAGE_DELETED": "Message deleted successfully."
+  "MESSAGE_DELETED": "Message deleted successfully.",
+  "LOGIN_SUCESS": "Logged in.",
+  "LOGOUT_SUCESS": "Logged out.",
+  "LOGIN_WITH_GOOGLE": "Login with Google"
 }

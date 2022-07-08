@@ -10,5 +10,8 @@
   "ANONYMOUS": "Anonim",
   "LOGOUT": "Çıkış Yap",
   "MESSAGE_UPDATED": "Mesaj başarıyla güncellendi.",
-  "MESSAGE_DELETED": "Mesaj başarıyla silindi."
+  "MESSAGE_DELETED": "Mesaj başarıyla silindi.",
+  "LOGIN_SUCESS": "Giriş yapıldı.",
+  "LOGOUT_SUCESS": "Çıkış yapıldı.",
+  "LOGIN_WITH_GOOGLE": "Google ile Giriş Yap"
 }
