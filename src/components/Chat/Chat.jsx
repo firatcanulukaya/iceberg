@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import Message from "../Message/Message";
 import {db} from "../../firebase";
-import {collection, getDocs, onSnapshot, addDoc} from "firebase/firestore";
+import {collection, getDocs, onSnapshot, addDoc, orderBy, query} from "firebase/firestore";
 import {useTranslation} from "react-i18next";
 import Spinner from "../Loading/Spinner";
 import Iceberg from "../../assets/img/logo.png"
@@ -36,7 +36,8 @@ const Chat = ({user}) => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const data = await getDocs(messagesRef);
+            const q = query(messagesRef, orderBy("createdAt", "asc"))
+            const data = await getDocs(q);
             await setMessages(data.docs.map(doc => ({...doc.data(), id: doc.id})))
             setLoading(false)
             document.getElementById('messagesUl').scrollTo(0, document.getElementById('messagesUl').scrollHeight)
@@ -45,7 +46,7 @@ const Chat = ({user}) => {
     }, [])
 
     useEffect(() => {
-        return onSnapshot(collection(db, "messages"), async (snapshot) => {
+        return onSnapshot(query(messagesRef, orderBy('createdAt', 'asc')), async (snapshot) => {
             await setMessages(snapshot.docs.map(doc => ({...doc.data(), id: doc.id})))
             document.getElementById('messagesUl').scrollTo(0, document.getElementById('messagesUl').scrollHeight)
         });
@@ -79,15 +80,11 @@ const Chat = ({user}) => {
                             {
                                 loading ? <div className="flex justify-center items-center"><Spinner/></div>
                                     :
-                                    messages
-                                        ?.sort((first, second) =>
-                                            first?.createdAt?.seconds <= second?.createdAt?.seconds ? -1 : 1
-                                        )
-                                        ?.map(message => (
-                                            <li key={message.id}>
-                                                <Message message={message} uid={user?.uid}/>
-                                            </li>
-                                        ))}
+                                    messages?.map(message => (
+                                        <li key={message.id}>
+                                            <Message message={message} uid={user?.uid}/>
+                                        </li>
+                                    ))}
                         </ul>
                     </div>
                 </div>
