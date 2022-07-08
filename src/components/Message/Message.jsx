@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import moment from "moment";
+import dayjs from "dayjs";
 import {updateDoc, doc, deleteDoc} from 'firebase/firestore'
 import {db} from "../../firebase";
 import {toast} from "react-hot-toast";
@@ -98,7 +98,7 @@ const Message = ({message, uid}) => {
                         </>
                     ) : <p className="mr-2 text-gray-300">Anonymous</p>}
                     <span className="text-gray-500 text-xs">
-                        {moment(message?.createdAt?.seconds * 1000).fromNow()}
+                        {dayjs(message?.createdAt?.seconds * 1000).fromNow()}
                     </span>
                 </div>
 
@@ -129,7 +129,7 @@ const Message = ({message, uid}) => {
 
 
                 {message.isEdited ?
-                    <p className="text-gray-500 text-[10px]">(edited {moment(message?.editMetadata?.timestamp.seconds * 1000).fromNow()})</p> : null}
+                    <p className="text-gray-500 text-[10px]">(edited {dayjs(message?.editMetadata?.timestamp.seconds * 1000).fromNow()})</p> : null}
             </div>
         </div>
     );

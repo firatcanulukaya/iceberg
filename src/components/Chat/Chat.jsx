@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import Message from "../Message/Message";
-import {db, logout} from "../../firebase";
+import {db} from "../../firebase";
 import {collection, getDocs, onSnapshot, addDoc} from "firebase/firestore";
 import Spinner from "../Loading/Spinner";
 import Iceberg from "../../assets/img/logo.png"
