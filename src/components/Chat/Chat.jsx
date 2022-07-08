@@ -4,6 +4,7 @@ import {db, logout} from "../../firebase";
 import {collection, getDocs, onSnapshot, addDoc} from "firebase/firestore";
 import Spinner from "../Loading/Spinner";
 import Iceberg from "../../assets/img/logo.png"
+import UserDropdown from "../UserDropdown/UserDropdown";
 
 const Chat = ({user}) => {
     const [newMessage, setNewMessage] = useState('');
@@ -88,20 +89,7 @@ const Chat = ({user}) => {
                     </div>
                 </div>
                 <div className="mb-6 mx-4 flex items-center gap-4">
-                    <span className="dropdown group bg-secondaryColor rounded-full px-3 py-1" tabIndex={0}>
-                                    <button className="dropdown-button">
-                                        <img src={user?.photoURL} alt="User Photo"
-                                             className="rounded-full w-8 h-8 mr-2"/>
-                                        <i className="dropdown-icon ml-2 h-5 w-5 fa-solid fa-caret-down text-gray-400"/>
-                                    </button>
-                                    <div className="dropdown-content shadow-lg bottom-[180%] md:left-[0px] left-[25px]">
-                                        <p onClick={logout}
-                                           className="transition-colors text-red-500 hover:text-red-600 flex gap-2 items-center">
-                                              <i className="fa-solid fa-person-running"/>
-                                            Logout
-                                        </p>
-                                    </div>
-                                </span>
+                    <UserDropdown user={user}/>
                     <form onSubmit={handleOnSubmit}
                           className="flex flex-row w-full bg-secondaryColor text-white rounded-md px-4 py-3 z-10 max-w-screen-lg mx-auto shadow-md">
                         <input
