@@ -1,42 +1,17 @@
 import React, {useState} from 'react';
 import dayjs from "dayjs";
-import {updateDoc, doc, deleteDoc} from 'firebase/firestore'
+import {doc, deleteDoc} from 'firebase/firestore'
 import {db} from "../../firebase";
 import {toast} from "react-hot-toast";
 import {useTranslation} from "react-i18next";
 import relativeTime from 'dayjs/plugin/relativeTime'
+import EditMessage from "./EditMessage";
 
 const Message = ({message, uid}) => {
     dayjs.extend(relativeTime);
+    const [isEditing, setIsEditing] = useState(false);
     const {i18n, t} = useTranslation();
     dayjs.locale(i18n.language);
-
-    const [isEditing, setIsEditing] = useState(false);
-    const [editMessage, setEditMessage] = useState('');
-
-    const updateMessage = async (e, id) => {
-        e.preventDefault();
-
-        const messageDoc = doc(db, "messages", id);
-
-        const newFields = {
-            text: editMessage,
-            isEdited: true,
-            editMetadata: {
-                timestamp: new Date()
-            }
-        };
-
-        await updateDoc(messageDoc, newFields)
-            .then(() => {
-                toast.success(t('MESSAGE_UPDATED'))
-                setIsEditing(false)
-                setEditMessage('')
-            })
-            .catch(error => {
-                toast.error(`${error.code}: ${error.message}`)
-            })
-    }
 
     const deleteMessage = async (id) => {
         const messageDoc = doc(db, "messages", id);
@@ -49,13 +24,8 @@ const Message = ({message, uid}) => {
             })
     }
 
-    const handleKeyDown = (e) => {
-        if (e.key === 'Escape') setIsEditing(false)
-    }
-
     const handleUpdate = () => {
         setIsEditing(true)
-        setEditMessage(message.text)
     }
 
     return (
@@ -108,31 +78,11 @@ const Message = ({message, uid}) => {
                     </span>
                 </div>
 
-
                 <div className="w-full">
-                    {isEditing ?
-                        <form onSubmit={e => updateMessage(e, message.id)}
-                              className="flex flex-row bg-secondaryColor text-white rounded-md px-4 py-3 z-10
-                            max-w-screen-lg mx-auto shadow-md relative mb-4">
-                            <input
-                                type="text"
-                                value={editMessage}
-                                onChange={e => setEditMessage(e.target.value)}
-                                placeholder={t('MESSAGE')}
-                                id={`message_${message.id}`}
-                                className="flex-1 bg-transparent outline-none" onKeyDown={handleKeyDown}/>
-                            <button
-                                type="submit"
-                                disabled={!editMessage}
-                                className="font-semibold cursor-pointer text-lg text-thirdColor transition-colors disabled:text-gray-500 disabled:cursor-not-allowed">
-                                <i className="fa-solid fa-paper-plane"/>
-                            </button>
-                        </form>
-                        :
-                        <p className="text-gray-400 break-words">{message.text}</p>
-                    }
+                    <p className="text-gray-400 break-words">{message?.text}</p>
                 </div>
 
+                <EditMessage message={message} open={isEditing} closeModal={() => setIsEditing(false)}/>
 
                 {message.isEdited ?
                     <p className="text-gray-500 text-[10px]">({t('EDITED_MESSAGE', {time: dayjs(message?.editMetadata?.timestamp.seconds * 1000).fromNow()})})</p> : null}
