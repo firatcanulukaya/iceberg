@@ -81,7 +81,7 @@ const Chat = ({user}) => {
                                         )
                                         ?.map(message => (
                                             <li key={message.id}>
-                                                <Message message={message} />
+                                                <Message message={message} uid={user?.uid}/>
                                             </li>
                                         ))}
                         </ul>
@@ -94,9 +94,12 @@ const Chat = ({user}) => {
                                              className="rounded-full w-8 h-8 mr-2"/>
                                         <i className="dropdown-icon ml-2 h-5 w-5 fa-solid fa-caret-down text-gray-400"/>
                                     </button>
-                                    <div className="dropdown-content shadow-lg">
+                                    <div className="dropdown-content shadow-lg bottom-[180%] md:left-[0px] left-[25px]">
                                         <p onClick={logout}
-                                           className="transition-colors text-red-500 hover:text-red-600">Logout</p>
+                                           className="transition-colors text-red-500 hover:text-red-600 flex gap-2 items-center">
+                                              <i className="fa-solid fa-person-running"/>
+                                            Logout
+                                        </p>
                                     </div>
                                 </span>
                     <form onSubmit={handleOnSubmit}
