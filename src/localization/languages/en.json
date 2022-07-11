@@ -13,5 +13,7 @@
   "MESSAGE_DELETED": "Message deleted successfully.",
   "LOGIN_SUCESS": "Logged in.",
   "LOGOUT_SUCESS": "Logged out.",
-  "LOGIN_WITH_GOOGLE": "Login with Google"
+  "LOGIN_WITH_GOOGLE": "Login with Google",
+  "REPLY": "Reply",
+  "REPLYING_TO": "Replying to {{name}}"
 }

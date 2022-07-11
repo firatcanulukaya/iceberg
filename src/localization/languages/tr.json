@@ -13,5 +13,7 @@
   "MESSAGE_DELETED": "Mesaj başarıyla silindi.",
   "LOGIN_SUCESS": "Giriş yapıldı.",
   "LOGOUT_SUCESS": "Çıkış yapıldı.",
-  "LOGIN_WITH_GOOGLE": "Google ile Giriş Yap"
+  "LOGIN_WITH_GOOGLE": "Google ile Giriş Yap",
+  "REPLY": "Yanıtla",
+  "REPLYING_TO": "{{name}} kişisine yanıt veriliyor."
 }

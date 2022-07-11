@@ -167,3 +167,33 @@ body {
 .dropdown-content p {
     @apply px-4 py-3 pl-6 cursor-pointer whitespace-nowrap hover:bg-gray-700;
 }
+
+.reply{
+    @apply w-1/2 bg-secondaryColorAlt py-1 px-2 absolute bottom-1 right-0 rounded transition-all opacity-0 invisible
+}
+
+.reply.active{
+    @apply !bottom-full opacity-100 visible
+}
+
+.messageReply {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 2rem;
+    padding-left: 3.75rem;
+    gap: 5px;
+}
+
+.messageReply::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 1.5rem;
+    display: block;
+    width: 31px;
+    height: 10px;
+    border-top-left-radius: 6px;
+    border-left: 2px solid var(--secondaryColorAlt);
+    border-top: 2px solid var(--secondaryColorAlt);
+}
