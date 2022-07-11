@@ -9,4 +9,5 @@ export const store = configureStore({
         messages,
         user
     },
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware({serializableCheck: false})
 })
