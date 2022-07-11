@@ -1,18 +1,21 @@
-import React, {useState} from 'react'
+import React from 'react'
 import {Toaster} from "react-hot-toast";
 import Login from "./components/Login/Login";
 import Chat from "./components/Chat/Chat";
 import {onAuthStateChanged} from "firebase/auth";
 import {auth} from "./firebase";
+import {useDispatch, useSelector} from "react-redux";
+import {setUser} from "./redux/reducers/userReducer";
 
 const App = () => {
-    const [user, setUser] = useState(null);
+    const dispatch = useDispatch();
+    const {user} = useSelector(state => state.user);
 
     onAuthStateChanged(auth, (user) => {
         if (user) {
-            setUser(user)
+            dispatch(setUser(user));
         } else {
-            setUser(null)
+            dispatch(setUser(null));
         }
     })
 

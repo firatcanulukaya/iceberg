@@ -1,75 +1,24 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import Message from "../Message/Message";
-import {db} from "../../firebase";
-import {collection, getDocs, onSnapshot, addDoc, orderBy, query} from "firebase/firestore";
+import {getMessages} from "../../firebase";
 import {useTranslation} from "react-i18next";
 import Spinner from "../Loading/Spinner";
 import Iceberg from "../../assets/img/logo.png"
-import UserDropdown from "../Dropdowns/UserDropdown";
-import LangsDropdown from "../Dropdowns/LangsDropdown";
-import {useSelector, useDispatch} from "react-redux";
-import {stopReplying} from "../../redux/reducers/replyReducer";
+import {useSelector} from "react-redux";
+import ChatBottom from "./ChatBottom";
 
-const Chat = ({user}) => {
-    const dispatch = useDispatch();
+const Chat = () => {
     const {t} = useTranslation();
-    const [newMessage, setNewMessage] = useState('');
-    const [messages, setMessages] = useState([]);
-    const [loading, setLoading] = useState(true)
-    const messagesRef = collection(db, "messages");
-    const {isReplying, reply} = useSelector(state => state.reply)
-
-    const handleOnSubmit = async e => {
-        e.preventDefault();
-
-        setNewMessage('')
-        if (isReplying) dispatch(stopReplying())
-
-        await addDoc(messagesRef, {
-            text: newMessage,
-            createdAt: new Date(),
-            user: {
-                displayName: user.displayName,
-                photoURL: user.photoURL,
-                uid: user.uid,
-                emailVerified: user.emailVerified
-            },
-            isEdited: false,
-            editMetadata: {},
-            isReplied: isReplying,
-            replyMetadata: {
-                ...reply
-            },
-        })
-
-        document.getElementById('messagesUl').scrollTo(0, document.getElementById('messagesUl').scrollHeight)
-    };
+    const {messages, loading} = useSelector(state => state.messages);
 
     useEffect(() => {
-        const fetchData = async () => {
-            const q = query(messagesRef, orderBy("createdAt", "asc"))
-            const data = await getDocs(q);
-            await setMessages(data.docs.map(doc => ({...doc.data(), id: doc.id})))
-            setLoading(false)
-            document.getElementById('messagesUl').scrollTo(0, document.getElementById('messagesUl').scrollHeight)
-        }
-        fetchData()
-    }, [])
-
-    useEffect(() => {
-        return onSnapshot(query(messagesRef, orderBy('createdAt', 'asc')), async (snapshot) => {
-            await setMessages(snapshot.docs.map(doc => ({...doc.data(), id: doc.id})))
-            document.getElementById('messagesUl').scrollTo(0, document.getElementById('messagesUl').scrollHeight)
-        });
+        getMessages();
     }, [])
 
     useEffect(() => {
         if (messages.length > 0) document.getElementById('messagesUl').scrollTo(0, document.getElementById('messagesUl').scrollHeight)
     }, [messages])
 
-    const handleKeyDown = (e) => {
-        if (e.key === 'Escape') dispatch(stopReplying())
-    }
 
     if (loading) return <div className="flex justify-center items-center h-[100vh] w-full"><Spinner/></div>
     return (
@@ -93,51 +42,15 @@ const Chat = ({user}) => {
                         </div>
                         <ul>
                             {
-                                loading ? <div className="flex justify-center items-center"><Spinner/></div>
-                                    :
-                                    messages?.map(message => (
-                                        <li key={message.id}>
-                                            <Message message={message} uid={user?.uid}/>
-                                        </li>
-                                    ))}
+                                messages?.map(message => (
+                                    <li key={message.id}>
+                                        <Message message={message}/>
+                                    </li>
+                                ))}
                         </ul>
                     </div>
                 </div>
-                <div className="mb-6 mx-4 flex items-center gap-4 flex-col-reverse md:flex-row relative">
-                    <div className="flex justify-evenly items-center w-full md:w-1/2">
-                        <UserDropdown user={user}/>
-                        <LangsDropdown/>
-                    </div>
-
-                    <div className={`reply ${isReplying && 'active'}`}>
-                        <div className="flex items-center justify-between gap-1">
-                            <div className="flex items-center gap-1">
-                                <img src={reply?.user.photoURL} className="w-6 h-6 rounded-full" alt=""/>
-                                <p className="text-primaryColorAlt text-xs">{t('REPLYING_TO', {name: reply?.user.displayName})}</p>
-                            </div>
-
-                            <i className="fa-solid fa-circle-xmark text-primaryColor opacity-80 hover:opacity-100 transition-opacity cursor-pointer"
-                               onClick={() => dispatch(stopReplying())}/>
-                        </div>
-                    </div>
-
-                    <form onSubmit={handleOnSubmit}
-                          id="messageForm"
-                          className="flex flex-row w-full bg-secondaryColor text-white rounded-md px-4 py-3 z-10 max-w-screen-lg mx-auto shadow-md">
-                        <input
-                            type="text"
-                            value={newMessage}
-                            onChange={e => setNewMessage(e.target.value)}
-                            placeholder={t('TYPE_YOUR_MESSAGE')}
-                            className="flex-1 bg-transparent outline-none" onKeyDown={handleKeyDown}/>
-                        <button
-                            type="submit"
-                            disabled={!newMessage}
-                            className="font-semibold cursor-pointer text-lg text-thirdColor transition-colors disabled:text-gray-500 disabled:cursor-not-allowed">
-                            <i className="fa-solid fa-paper-plane"/>
-                        </button>
-                    </form>
-                </div>
+                <ChatBottom/>
             </div>
         </div>
     );

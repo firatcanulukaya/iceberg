@@ -1,21 +1,22 @@
 import React, {useState} from 'react';
+import {useDispatch, useSelector} from "react-redux";
 import dayjs from "dayjs";
 import {doc, deleteDoc} from 'firebase/firestore'
-import {db} from "../../firebase";
 import {toast} from "react-hot-toast";
 import {useTranslation} from "react-i18next";
+import {db} from "../../firebase";
 import relativeTime from 'dayjs/plugin/relativeTime'
 import EditMessage from "./EditMessage";
-import {useDispatch} from "react-redux";
 import {startReplying} from "../../redux/reducers/replyReducer";
 
 dayjs.extend(relativeTime);
 
-const Message = ({message, uid}) => {
+const Message = ({message}) => {
     const dispatch = useDispatch();
-    const [isEditing, setIsEditing] = useState(false);
     const {i18n, t} = useTranslation();
     dayjs.locale(i18n.language);
+    const [isEditing, setIsEditing] = useState(false);
+    const {user} = useSelector(state => state.user);
 
     const deleteMessage = async (id) => {
         const messageDoc = doc(db, "messages", id);
@@ -58,7 +59,7 @@ const Message = ({message, uid}) => {
                                             {t('REPLY')}
                                         </p>
                                         {
-                                            uid === message.user.uid &&
+                                            user.uid === message.user.uid &&
                                             <>
                                                 <div className="w-full h-[1px] bg-gray-700"/>
                                                 <p className="text-white hover:text-gray-300 transition-colors flex gap-2 items-center"
