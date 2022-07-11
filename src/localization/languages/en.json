@@ -15,5 +15,6 @@
   "LOGOUT_SUCESS": "Logged out.",
   "LOGIN_WITH_GOOGLE": "Login with Google",
   "REPLY": "Reply",
-  "REPLYING_TO": "Replying to {{name}}"
+  "REPLYING_TO": "Replying to {{name}}",
+  "DELETED_MESSAGE": "deleted message."
 }

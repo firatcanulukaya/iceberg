@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import dayjs from "dayjs";
 import {doc, deleteDoc} from 'firebase/firestore'
@@ -16,7 +16,9 @@ const Message = ({message}) => {
     const {i18n, t} = useTranslation();
     dayjs.locale(i18n.language);
     const [isEditing, setIsEditing] = useState(false);
+    const [replied, setReplied] = useState({});
     const {user} = useSelector(state => state.user);
+    const {messages} = useSelector(state => state.messages);
 
     const deleteMessage = async (id) => {
         const messageDoc = doc(db, "messages", id);
@@ -43,6 +45,12 @@ const Message = ({message}) => {
             }
         }))
     }
+
+    useEffect(() => {
+        if (message.isReplied) {
+            setReplied(messages.find(m => m.id === message.replyMetadata.id))
+        }
+    }, [message.isReplied, messages])
 
     return (
         <div className="px-4 py-4 hover:bg-secondaryColor transition-colors flex items-start relative"
@@ -89,8 +97,14 @@ const Message = ({message}) => {
                         <div className="font-semibold text-gray-500 text-sm">
                             {message.replyMetadata.user.displayName}
                         </div>
-                        <div className="text-xs text-gray-400">
-                            {message.replyMetadata.text.length >= 30 ? message.replyMetadata.text.substr(0, 30) + '...' : message.replyMetadata.text}
+                        <div className="text-xs text-gray-400 flex gap-1">
+                            {replied ? replied?.text?.length > 30 ? replied?.text?.substr(0, 30) + '...' : replied?.text
+                                :
+                                <p className="text-gray-500 italic line-through">{t('DELETED_MESSAGE')}</p>}
+
+                            {replied?.isEdited ?
+                                <p className="text-gray-500 text-[10px]">({t('EDITED_MESSAGE', {time: dayjs(replied?.editMetadata?.timestamp.seconds * 1000).fromNow()})})</p>
+                                : null}
                         </div>
                     </div>
                 }
@@ -125,7 +139,8 @@ const Message = ({message}) => {
                         <EditMessage message={message} open={isEditing} closeModal={() => setIsEditing(false)}/>
 
                         {message.isEdited ?
-                            <p className="text-gray-500 text-[10px]">({t('EDITED_MESSAGE', {time: dayjs(message?.editMetadata?.timestamp.seconds * 1000).fromNow()})})</p> : null}
+                            <p className="text-gray-500 text-[10px]">({t('EDITED_MESSAGE', {time: dayjs(message?.editMetadata?.timestamp.seconds * 1000).fromNow()})})</p>
+                            : null}
                     </div>
                 </div>
             </div>

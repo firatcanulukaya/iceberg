@@ -15,5 +15,6 @@
   "LOGOUT_SUCESS": "Çıkış yapıldı.",
   "LOGIN_WITH_GOOGLE": "Google ile Giriş Yap",
   "REPLY": "Yanıtla",
-  "REPLYING_TO": "{{name}} kişisine yanıt veriliyor."
+  "REPLYING_TO": "{{name}} kişisine yanıt veriliyor.",
+  "DELETED_MESSAGE": "mesaj silinmiş."
 }
