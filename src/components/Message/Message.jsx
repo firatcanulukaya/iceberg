@@ -121,11 +121,7 @@ const Message = ({message}) => {
                     <div className="flex flex-col">
                         <div className="flex items-center mb-1">
                             {message?.user?.displayName ? (
-                                <>
-                                    <p className="mr-2 text-gray-300">{message?.user?.displayName}</p>
-                                    <p className="mr-2 text-gray-400">{message?.user?.emailVerified ?
-                                        <i className="fa-solid fa-check"/> : null}</p>
-                                </>
+                                <p className="mr-2 text-gray-300">{message?.user?.displayName}</p>
                             ) : <p className="mr-2 text-gray-300">{t('ANONYMOUS')}</p>}
                             <span className="text-gray-500 text-xs">
                         {dayjs(message?.createdAt?.seconds * 1000).fromNow()}
