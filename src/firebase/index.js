@@ -1,4 +1,5 @@
 import {initializeApp,} from 'firebase/app';
+import { getAnalytics } from "firebase/analytics";
 import {GoogleAuthProvider, getAuth, signInWithPopup, signOut} from "firebase/auth";
 import {addDoc, collection, getDocs, getFirestore, onSnapshot, orderBy, query} from "firebase/firestore";
 import {toast} from "react-hot-toast";
@@ -17,6 +18,8 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+
 export const auth = getAuth();
 export const db = getFirestore(app);
 const provider = new GoogleAuthProvider();
