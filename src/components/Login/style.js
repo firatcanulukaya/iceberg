@@ -10,7 +10,7 @@ export const Container = styled.div`
   gap: 2rem;
 `;
 
-export const LoginWithGoogleBtn = styled.button`
+export const LoginBtn = styled.button`
   display: flex;
   align-items: center;
   gap: 1rem;

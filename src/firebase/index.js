@@ -1,6 +1,6 @@
 import {initializeApp,} from 'firebase/app';
-import { getAnalytics } from "firebase/analytics";
-import {GoogleAuthProvider, getAuth, signInWithPopup, signOut} from "firebase/auth";
+import {getAnalytics} from "firebase/analytics";
+import {GoogleAuthProvider, getAuth, signInWithPopup, signOut, FacebookAuthProvider} from "firebase/auth";
 import {addDoc, collection, getDocs, getFirestore, onSnapshot, orderBy, query} from "firebase/firestore";
 import {toast} from "react-hot-toast";
 import Cookies from "js-cookie";
@@ -22,7 +22,8 @@ const analytics = getAnalytics(app);
 
 export const auth = getAuth();
 export const db = getFirestore(app);
-const provider = new GoogleAuthProvider();
+const googleProvider = new GoogleAuthProvider();
+const facebookProvider = new FacebookAuthProvider();
 const messagesRef = collection(db, "messages");
 
 onSnapshot(query(messagesRef, orderBy('createdAt', 'asc')), async (snapshot) => {
@@ -37,7 +38,7 @@ export const getMessages = async () => {
 }
 
 export const signInGoogle = async () => {
-    await signInWithPopup(auth, provider)
+    await signInWithPopup(auth, googleProvider)
         .then((result) => {
             const credential = GoogleAuthProvider.credentialFromResult(result);
             const token = credential.accessToken;
@@ -47,7 +48,19 @@ export const signInGoogle = async () => {
         .catch((error) => {
             toast.error(`${error.code}: ${error.message}`)
         });
+}
 
+export const signInFacebook = async () => {
+    await signInWithPopup(auth, facebookProvider)
+        .then((result) => {
+            const credential = FacebookAuthProvider.credentialFromResult(result);
+            const token = credential.accessToken;
+            toast.success(i18n.t('LOGIN_SUCESS'));
+            Cookies.set('_USER_TOKEN_', token)
+        })
+        .catch((error) => {
+            toast.error(`${error.code}: ${error.message}`)
+        });
 }
 
 export const logout = () => {
