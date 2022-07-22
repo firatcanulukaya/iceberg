@@ -10,6 +10,16 @@ export const Container = styled.div`
   gap: 2rem;
 `;
 
+export const LoginBtns = styled.div`
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+
+  @media (max-width: 900px) {
+    flex-direction: column;
+  }
+`;
+
 export const LoginBtn = styled.button`
   display: flex;
   align-items: center;
@@ -21,6 +31,7 @@ export const LoginBtn = styled.button`
   transition: all .3s ease-in-out;
   cursor: pointer;
   font-size: 1.3rem;
+  flex-shrink: 0;
 
   &:hover {
     transform: translate(20px, -10px) scale(1.1);
