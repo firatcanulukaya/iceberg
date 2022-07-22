@@ -36,6 +36,8 @@ const Message = ({message}) => {
     }
 
     const handleReply = () => {
+        const input = document.getElementById('messageInput');
+
         dispatch(startReplying({
             text: message.text,
             id: message.id,
@@ -44,6 +46,7 @@ const Message = ({message}) => {
                 displayName: message.user.displayName
             }
         }))
+        input.focus();
     }
 
     useEffect(() => {

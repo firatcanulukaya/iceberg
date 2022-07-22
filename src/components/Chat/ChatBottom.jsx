@@ -48,6 +48,7 @@ const ChatBottom = () => {
                   className="flex flex-row w-full bg-secondaryColor text-white rounded-md px-4 py-3 z-10 max-w-screen-lg mx-auto shadow-md">
                 <input
                     type="text"
+                    id="messageInput"
                     value={newMessage}
                     onChange={e => setNewMessage(e.target.value)}
                     placeholder={t('TYPE_YOUR_MESSAGE')}
