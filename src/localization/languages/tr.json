@@ -15,6 +15,7 @@
   "LOGOUT_SUCESS": "Çıkış yapıldı.",
   "LOGIN_WITH_GOOGLE": "Google ile Giriş Yap",
   "LOGIN_WITH_FACEBOOK": "Facebook ile Giriş Yap",
+  "LOGIN_WITH_GITHUB": "Github ile Giriş Yap",
   "REPLY": "Yanıtla",
   "REPLYING_TO": "{{name}} kişisine yanıt veriliyor.",
   "DELETED_MESSAGE": "mesaj silinmiş."

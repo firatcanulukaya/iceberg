@@ -1,5 +1,5 @@
 import {Container, IcebergLabel, IcebergLogo, IcebergTitle, LoginBtn} from "./style";
-import {signInGoogle, signInFacebook} from "../../firebase";
+import {signInGoogle, signInFacebook, signInGithub} from "../../firebase";
 import {useTranslation} from "react-i18next";
 import Iceberg from "../../assets/img/logo.png"
 
@@ -47,8 +47,8 @@ const Login = () => {
                      height="30px">
                     <linearGradient id="Ld6sqrtcxMyckEl6xeDdMa" x1="9.993" x2="40.615" y1="9.993" y2="40.615"
                                     gradientUnits="userSpaceOnUse">
-                        <stop offset="0" stop-color="#2aa4f4"/>
-                        <stop offset="1" stop-color="#007ad9"/>
+                        <stop offset="0" stopColor="#2aa4f4"/>
+                        <stop offset="1" stopColor="#007ad9"/>
                     </linearGradient>
                     <path fill="url(#Ld6sqrtcxMyckEl6xeDdMa)"
                           d="M24,4C12.954,4,4,12.954,4,24s8.954,20,20,20s20-8.954,20-20S35.046,4,24,4z"/>
@@ -56,6 +56,14 @@ const Login = () => {
                           d="M26.707,29.301h5.176l0.813-5.258h-5.989v-2.874c0-2.184,0.714-4.121,2.757-4.121h3.283V12.46 c-0.577-0.078-1.797-0.248-4.102-0.248c-4.814,0-7.636,2.542-7.636,8.334v3.498H16.06v5.258h4.948v14.452 C21.988,43.9,22.981,44,24,44c0.921,0,1.82-0.084,2.707-0.204V29.301z"/>
                 </svg>
                 {t('LOGIN_WITH_FACEBOOK')}
+            </LoginBtn>
+            <LoginBtn onClick={signInGithub}>
+                <svg height="32" aria-hidden="true" viewBox="0 0 16 16" version="1.1" width="32"
+                     data-view-component="true" className="octicon octicon-mark-github v-align-middle" fill="#fff">
+                    <path fillRule="evenodd"
+                          d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
+                </svg>
+                {t('LOGIN_WITH_GITHUB')}
             </LoginBtn>
         </Container>
     )
