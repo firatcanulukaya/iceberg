@@ -37,9 +37,9 @@ const ChatBottom = () => {
                         <img src={reply?.user.photoURL} className="w-6 h-6 rounded-full" alt=""/>
                         <p className="text-primaryColorAlt text-xs">{t('REPLYING_TO', {name: reply?.user.displayName})}</p>
                     </div>
-
-                    <i className="fa-solid fa-circle-xmark text-primaryColor opacity-80 hover:opacity-100 transition-opacity cursor-pointer"
-                       onClick={() => dispatch(stopReplying())}/>
+                    <div className="cursor-pointer" onClick={() => dispatch(stopReplying())}>
+                        <i className="fa-solid fa-circle-xmark text-primaryColor opacity-80 hover:opacity-100 transition-opacity"/>
+                    </div>
                 </div>
             </div>
 
